@@ -223,8 +223,8 @@ function init() {
 		// Sự kiện click vào các ô
 		let move;
 		let depth;
-		// click("e2");
-		// click("e4");
+		click("e2");
+		click("e4");
 		for (let pos in board) {
 			document.getElementById(pos).addEventListener("click", function() {
 				click(pos);
@@ -240,22 +240,25 @@ function init() {
 
 						// movingSound.pause();
 						// movingSound.currentTime = 0;
-						let p = points(pieces, white) + points(pieces, black);
-						if (p === 2000) {
-							alert("Draw");
-							return;
+						let p = Math.min(points(pieces, white), points(pieces, black));
+						if (p === 1000) {
+							if (Math.max(points(pieces, white), points(pieces, black)) === 1000) {
+								alert("Draw");
+								return;
+							}
+							depth = 7;
 						}
-						if (p < 2007)
+						if (p < 1004)
 							depth = 6;
-						else if (p < 2020)
+						else if (p < 1010)
 							depth = 5;
-						else if (p < 2071)
+						else if (p < 1020)
 							depth = 4;
 						else
 							depth = 3;
-						console.log(p, depth);
+						// console.log(p, depth);
 						move = minimax(board, pieces, depth);
-						console.log(move);
+						// console.log(move);
 						click(move[0]);
 						click(move[1]);
 
@@ -313,11 +316,6 @@ class Pawn {
 
 		// Kiểm tra xem có bắt tốt qua đường (en passant) không
 		else if (pos[0] !== this.position[0] && board[pos] === -1) {
-			if (pieces[board[pos[0]+this.position[1]]] === undefined) {
-				console.log(this.validMoves);
-				console.log("color:", this.color, this.position, pos);
-				console.log(pos[0]+this.position[1], board[pos[0]+this.position[1]]);
-			}
 			pieces[board[pos[0]+this.position[1]]].alive = false;
 			board[pos[0]+this.position[1]] = -1;
 		}
@@ -888,6 +886,7 @@ function minimax(board, pieces, depth, alpha = -1.0/0.0, beta = 1.0/0.0, turn = 
 					update(boardCopied, piecesCopied, turn, protectKing = false);
 
 					let result = minimax(boardCopied, piecesCopied, depth-1, alpha, beta, white);
+
 					// Trả bàn cờ về bước trước đó
 					if (pieces[i].points === 1 && newPos[0] !== oldPos[0] && board[newPos] === -1) {	// Nếu có quân cờ bị ăn kiểu en passant thì hồi sinh nó
 						piecesCopied[board[newPos[0]+oldPos[1]]].alive = true;
@@ -898,7 +897,19 @@ function minimax(board, pieces, depth, alpha = -1.0/0.0, beta = 1.0/0.0, turn = 
 						piecesCopied[board[newPos]].alive = true;	// dòng này phải dùng board vì chỉ có board mới lưu quân cờ ở vị trí đó trước khi nó bị ăn
 					boardCopied[oldPos] = board[oldPos];
 					boardCopied[newPos] = board[newPos];
-
+					// Nếu nhập thành thì trả xe về vị trí cũ
+					if (pieces[i].points === 1000 && !pieces[i].moved) {
+						if (newPos[0] === "c") {
+							boardCopied["a"+oldPos[1]] = i-3;
+							boardCopied["c"+oldPos[1]] = -1;
+							piecesCopied[i-3] = Object.assign(Object.create(Object.getPrototypeOf(pieces[i-3])), pieces[i-3]);
+						}
+						if (newPos[0] === "g") {
+							boardCopied["h"+oldPos[1]] = i-2;
+							boardCopied["f"+oldPos[1]] = -1;
+							piecesCopied[i-2] = Object.assign(Object.create(Object.getPrototypeOf(pieces[i-2])), pieces[i-2]);
+						}
+					}
 
 					if (result[2] > maxPoints) {
 						maxPoints = result[2];
@@ -938,6 +949,19 @@ function minimax(board, pieces, depth, alpha = -1.0/0.0, beta = 1.0/0.0, turn = 
 						piecesCopied[board[newPos]].alive = true;	// dòng này phải dùng board vì chỉ có board mới lưu quân cờ ở vị trí đó trước khi nó bị ăn
 					boardCopied[oldPos] = board[oldPos];
 					boardCopied[newPos] = board[newPos];
+					// Nếu nhập thành thì trả xe về vị trí cũ
+					if (pieces[i].points === 1000 && !pieces[i].moved) {
+						if (newPos[0] === "c") {
+							boardCopied["a"+oldPos[1]] = i-3;
+							boardCopied["c"+oldPos[1]] = -1;
+							piecesCopied[i-3] = Object.assign(Object.create(Object.getPrototypeOf(pieces[i-3])), pieces[i-3]);
+						}
+						if (newPos[0] === "g") {
+							boardCopied["h"+oldPos[1]] = i-2;
+							boardCopied["f"+oldPos[1]] = -1;
+							piecesCopied[i-2] = Object.assign(Object.create(Object.getPrototypeOf(pieces[i-2])), pieces[i-2]);
+						}
+					}
 
 					if (result[2] < minPoints) {
 						minPoints = result[2];
