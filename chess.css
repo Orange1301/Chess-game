@@ -1,0 +1,83 @@
+/** {background-color: black;}*/
+
+/*#gameBoard {
+	background-color: #0000ff;
+}*/
+
+.alphabetCell {
+	background-color: #653308;
+	color: #fff;
+	font-family: "Arial";
+	font-weight: bold;
+	text-align: center;
+	width: 75px;
+	height: 35px;
+}
+
+.numberCell {
+	background-color: #653308;
+	color: #fff;
+	font-family: "Arial";
+	font-weight: bold;
+	text-align: center;
+	width: 35px;
+	height: 75px;
+}
+
+.cornerCell {
+	background-color: #653308;
+	width: 35px;
+	height: 35px;
+}
+
+.light-cell {
+	background-color: #facb9c;
+	width: 75px;
+	height: 75px;
+}
+
+.dark-cell {
+	background-color: #d48c44;
+	width: 75px;
+	height: 75px;
+}
+
+.icon {
+	text-align: center;
+	display: block;
+	margin: 0 auto;
+	width: 75px;
+	height: 75px;
+}
+.light-cell:hover {
+	background-color: #c8a27c;
+}
+.dark-cell:hover {
+	background-color: #a97036;
+}
+
+.AImove-lightCell {
+/*	background-color: #c8a27c;*/
+	background-color: #96795d;
+}
+.AImove-darkCell {
+/*	background-color: #a97036;*/
+	background-color: #7f5428;
+}
+
+.light-highlightCell {
+	background-color: #ffa27c;
+	width: 75px;
+	height: 75px;
+}
+
+.dark-highlightCell {
+	background-color: #d87036;
+	width: 75px;
+	height: 75px;
+}
+
+table {
+	margin: auto;
+	border: 0px;
+}
