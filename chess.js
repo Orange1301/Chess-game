@@ -223,8 +223,8 @@ function init() {
 		// Sự kiện click vào các ô
 		let move;
 		let depth;
-		click("e2");
-		click("e4");
+		// click("e2");
+		// click("e4");
 		for (let pos in board) {
 			document.getElementById(pos).addEventListener("click", function() {
 				click(pos);
