@@ -228,6 +228,7 @@ function init() {
 		for (let pos in board) {
 			document.getElementById(pos).addEventListener("click", function() {
 				click(pos);
+				console.log(Math.random());
 				if (turn === black) {
 					setTimeout(() => {
 						if (noValidMoves(pieces, black)) {
@@ -915,6 +916,8 @@ function minimax(board, pieces, depth, alpha = -1.0/0.0, beta = 1.0/0.0, turn = 
 						maxPoints = result[2];
 						maxMove = [oldPos, newPos];
 					}
+					else if (result[2] === maxPoints && Math.random() < 0.1)
+						maxMove = [oldPos, newPos];
 
 					if (maxPoints > alpha)
 						alpha = maxPoints;
@@ -967,6 +970,8 @@ function minimax(board, pieces, depth, alpha = -1.0/0.0, beta = 1.0/0.0, turn = 
 						minPoints = result[2];
 						minMove = [oldPos, newPos];
 					}
+					else if (result[2] === minPoints && Math.random() < 0.1)
+						minMove = [oldPos, newPos];
 
 					if (minPoints < beta)
 						beta = minPoints;
