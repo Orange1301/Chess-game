@@ -228,7 +228,6 @@ function init() {
 		for (let pos in board) {
 			document.getElementById(pos).addEventListener("click", function() {
 				click(pos);
-				console.log(Math.random());
 				if (turn === black) {
 					setTimeout(() => {
 						if (noValidMoves(pieces, black)) {
